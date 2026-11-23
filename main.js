@@ -270,7 +270,7 @@ btnRutas.addEventListener("click", function(){
         anotar("Ruta", []);
         guardarA();
         mRegistro();
-        mEstado("No existe camino entre " + vertices[o].nom + " y " + vertices[dest].nom + ".", "error");
+        mEstado("No existe camino entre "+vertices[o].nom+" y "+vertices[dest].nom+".", "error");
         return;
     }
 
@@ -294,14 +294,14 @@ btnRutas.addEventListener("click", function(){
     }
 
     const lineasR=[
-        "Ruta Dijkstra: " + textoRuta(rutaD),
-        "Ruta optima: " + textoRuta(optima),
-        "Ruta critica: " + textoRuta(critica)
+        "Ruta Dijkstra: "+textoRuta(rutaD),
+        "Ruta optima: "+textoRuta(optima),
+        "Ruta critica: "+textoRuta(critica)
     ];
     if (nota!==""){
-        lineasR.push("Ruta nota: " + nota);
+        lineasR.push("Ruta nota: "+nota);
     }
-    lineasR.push("Ruta caminos posibles encontrados: " + lista.length);
+    lineasR.push("Ruta caminos posibles encontrados: "+lista.length);
 
     anotar("Ruta", lineasR);
     guardarA();

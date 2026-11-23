@@ -1,16 +1,16 @@
 function dks(origen, destino){
   const n=vertices.length;
-  const visitado=new Array(n).fill(false);
+  const marcado=new Array(n).fill(false);
   const camino=[origen];
   const pasos=[];
   let peso=0;
-  visitado[origen]=true;
+  marcado[origen]=true;
 
   while (camino[camino.length-1]!==destino){
     const actual=camino[camino.length-1];
     let mejor=-1;
     for (let j=0; j<n; j++){
-      if (matriz[actual][j]>0 && !visitado[j]){
+      if (matriz[actual][j]>0 && !marcado[j]){
         if (mejor===-1 || matriz[actual][j]<matriz[actual][mejor]){
           mejor=j;
         }
@@ -27,12 +27,11 @@ function dks(origen, destino){
       pasos.push("Proceso Dijkstra: "+vertices[actual].nom+" no tiene salida, se regresa a "+vertices[anterior].nom);
       continue;
     }
-    visitado[mejor]=true;
+    marcado[mejor]=true;
     camino.push(mejor);
     peso+=matriz[actual][mejor];
     pasos.push("Proceso Dijkstra: desde "+vertices[actual].nom+" se elige "+vertices[mejor].nom+" (arista menor = "+matriz[actual][mejor]+")");
   }
-
   return {camino:camino, peso:peso, pasos:pasos};
 }
 
@@ -46,17 +45,14 @@ function textoDKS(origen, destino, d){
 
 function buscar(actual, destino, visitado, camino, peso, lista){
   if (actual===destino){
-    lista.push({camino: camino.slice(), peso: peso});
+    lista.push({camino:camino.slice(), peso:peso});
     return;
   }
-
   for (let j=0; j<vertices.length; j++){
     if (matriz[actual][j]>0 && !visitado[j]){
       visitado[j]=true;
       camino.push(j);
-
-      buscar(j, destino, visitado, camino, peso + matriz[actual][j], lista);
-
+      buscar(j, destino, visitado, camino, peso+matriz[actual][j], lista);
       camino.pop();
       visitado[j]=false;
     }
@@ -66,14 +62,11 @@ function buscar(actual, destino, visitado, camino, peso, lista){
 function tLosCaminos(origen, destino){
   const visitado=new Array(vertices.length).fill(false);
   visitado[origen]=true;
-
   const lista=[];
   buscar(origen, destino, visitado, [origen], 0, lista);
-
   lista.sort(function (a, b){
     return a.peso-b.peso;
   });
-
   return lista;
 }
 
@@ -82,5 +75,5 @@ function textoRuta(ruta){
   for (let i=0; i<ruta.camino.length; i++){
     nombres.push(vertices[ruta.camino[i]].nom);
   }
-  return nombres.join("→")+" (peso " + ruta.peso + ")";
+  return nombres.join("→")+" (peso "+ruta.peso+")";
 }
