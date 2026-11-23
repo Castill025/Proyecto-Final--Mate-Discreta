@@ -1,6 +1,6 @@
 function dks(origen, destino){
   const n=vertices.length;
-  const distancia=new Array(n).fill(Infinity);
+  const visitado=new Array(n).fill(false);
   const camino=[origen];
   const pasos=[];
   let peso=0;
