@@ -79,13 +79,23 @@ function colorear(i, k, asignacion){
 }
 
 function gradoCromatico(maxColores){
-  for (let k =1; k<=maxColores; k++){
+  const pasos=[];
+
+  for (let k=1; k<=maxColores; k++){
     const asignacion=new Array(vertices.length).fill(-1);
+
     if (colorear(0, k, asignacion)){
-      return { k:k, asignacion:asignacion };
+      pasos.push("Proceso del Color: con "+k+" colores si existe una asignacion valida");
+      for (let i=0; i<vertices.length; i++){
+        pasos.push("Proceso del Color: "+vertices[i].nom+" recibe el color "+(asignacion[i]+1));
+      }
+      return { k:k, asignacion:asignacion, pasos:pasos };
     }
+
+    pasos.push("Proceso del Color: con "+k+" colores no es posible");
   }
-  return null;
+
+  return { k:null, asignacion:null, pasos:pasos};
 }
 
 function limpiarC(){

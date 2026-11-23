@@ -225,26 +225,25 @@ btnPintar.addEventListener("click", function(){
     }
 
     const res=gradoCromatico(colores.length);
-
-    if (res===null){
+    
+    if (res.k===null){
         limpiarC();
-        anotar("Grado", []);
-        anotar("Proceso del Color", ["Proceso del Color: no hay asignacion valida con " + colores.length + " colores"]);
-        anotar("Proceso del Color", []);
-        guardarA();
-        mRegistro();
+        anotar("Grado", ["Grado cromatico: no alcanza con " + colores.length + " colores."]);
+        anotar("Proceso del Color", res.pasos);
         rdibujar();
-        mEstado("Con " + colores.length + " colores no alcanza. Agregar mas colores.", "error");
+        mRegistro();
+        mEstado("Con " + colores.length + " colores no alcanza. Agrega mas colores.", "error");
         return;
     }
-
+    
     for (let i=0; i<vertices.length; i++){
         vertices[i].color=colores[res.asignacion[i]];
     }
 
     anotar("Grado", ["Grado cromatico: " + res.k + " (utilizaste " + res.k + " de " + colores.length + " colores)."]);
-    mRegistro();
+    anotar("Proceso del Color", res.pasos);
     rdibujar();
+    mRegistro();
     mEstado("Grado cromatico: " + res.k + " (utilizaste " + res.k + " de " + colores.length + " colores).", "ok");
 });
 
