@@ -96,7 +96,7 @@ function mMatriz(){
         }
         html+="</tr>";
     }
-    caja.innerHTML=html+"</table>";
+    caja.innerHTML="<h3>Matriz de adyacencia</h3>"+html+"</table>";
 }
 
 function rdibujar() {

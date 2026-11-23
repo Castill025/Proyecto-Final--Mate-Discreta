@@ -45,10 +45,49 @@ function anotar(prefijo, lineasNuevas){
 
 function mRegistro(){
   resultado.innerHTML = "";
-  for (let i=0; i<registro.length; i++){
-    const p=document.createElement("p");
-    p.textContent=registro[i];
-    resultado.appendChild(p);
+
+  const grupos = [
+    { titulo: "Grado cromático", prefijo: "Grado",            plegable: false },
+    { titulo: "Rutas",           prefijo: "Ruta",             plegable: false },
+    { titulo: "Proceso del coloreado", prefijo: "Proceso del Color", plegable: true },
+    { titulo: "Proceso de Dijkstra",   prefijo: "Proceso Dijkstra",  plegable: true }
+  ];
+
+  for (let g = 0; g < grupos.length; g++){
+    const grupo = grupos[g];
+    const lineas = [];
+
+    for (let i = 0; i < registro.length; i++){
+      if (registro[i].startsWith(grupo.prefijo)){
+        lineas.push(registro[i]);
+      }
+    }
+
+    if (lineas.length === 0){
+      continue;
+    }
+
+    const tarjeta = document.createElement("section");
+    tarjeta.className = "bloque";
+
+    const contenedor = grupo.plegable
+      ? document.createElement("details")
+      : document.createElement("div");
+
+    const encabezado = grupo.plegable
+      ? document.createElement("summary")
+      : document.createElement("h3");
+    encabezado.textContent = grupo.titulo;
+    contenedor.appendChild(encabezado);
+
+    for (let i = 0; i < lineas.length; i++){
+      const p = document.createElement("p");
+      p.textContent = lineas[i];
+      contenedor.appendChild(p);
+    }
+
+    tarjeta.appendChild(contenedor);
+    resultado.appendChild(tarjeta);
   }
 }
 
