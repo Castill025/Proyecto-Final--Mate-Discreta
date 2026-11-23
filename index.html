@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilosP.css">
+    <title>Proyecto Final</title>
+</head>
+<body>
+    
+    <header class="encabezado">Proyecto final</header>
+    <div class="app">
+
+        <aside class="panel" id="botones">
+            <div class="grupo">
+                <button id="btnVertice">Agregar vertice</button>
+                <button id="btnArista">Agregar arista</button>
+                <button id="btnBorrar">Limpiar</button>
+            </div>
+
+            <div class="grupo">
+                <input type="text" id="colores" value="rojo, azul, verde" aria-label="Colores separados por coma">
+                <button id="btnPintar">Pintar Vertices</button>
+            </div>
+
+            <div class="grupo">
+                <div class="fila">
+                    <div class="campo">
+                        <label for="selOrigen">Origen</label>
+                        <select id="selOrigen"></select>
+                    </div>
+                    <div class="campo">
+                        <label for="selDestino">Destino</label>
+                        <select id="selDestino"></select>
+                    </div>
+                </div>
+                <button id="btnRutas">Calcular Rutas</button>
+            </div>
+
+            <div class="grupo">
+                <button id="btnGuardar">Guardar</button>
+                <button id="btnCargar">Cargar</button>
+                <input type="file" id="archEntrada" accept=".txt" hidden>
+            </div>
+        </aside>
+
+        <main class="contenido">
+            <canvas id="boceto" width="800" height="500"></canvas>
+
+            <p id="estado">Modo: vertice. Haz clic en el lienzo para crear un nodo.</p>
+            <p id="contador"></p>
+
+            <div id="caComando" hidden>
+                <p>Archivo guardado. Para abrir NotePad desde la consola:</p>
+                <code id="comando">notepad "%USERPROFILE%\Downloads\grafo.txt"</code>
+                <button id="btnCopiar">Copiar comando</button>
+            </div>
+
+            <div id="resultado"></div>
+
+            <div id="tablaMatriz"></div>
+        </main>
+
+    </div>
+
+    <script src="grafo.js"></script>
+    <script src="cromaticoG.js"></script>
+    <script src="mDKS.js"></script>
+    <script src="archivo.js"></script>
+    <script src="main.js"></script>
+
+</body>
+</html>

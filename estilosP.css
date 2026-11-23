@@ -1,0 +1,301 @@
+body {
+  text-align: center;
+}
+
+.encabezado {
+    max-width: 1040px;    
+    margin: 0 auto 14px;
+    padding: 14px 20px;
+    background: var(--rosa);   
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    border-radius: var(--radio);
+}
+
+canvas {
+  display: block;
+  margin: 0 auto;
+  border: 1px solid black;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+body {
+    margin: 0;
+    padding: 16px;
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+.app {
+    display: grid;
+    grid-template-columns: 190px 1fr;
+    gap: 14px;
+    align-items: start;
+    max-width: 1040px;
+    margin: 0 auto;
+}
+
+.contenido {
+    min-width: 0;
+    overflow-x: auto;
+}
+
+.panel {
+    position: sticky;
+    top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px;
+    background: var(--tarjeta);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+}
+
+.grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--borde);
+}
+
+.grupo:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.fila {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--texto-suave);
+}
+
+button {
+    width: 100%;
+    height: 34px;
+    padding: 0 10px;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--texto);
+    background: #ffffff;
+    border: 1px solid var(--linea);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, transform 0.05s;
+}
+
+button:hover {
+    background: #f8ecee;
+    border-color: var(--rosa);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 3px solid rgba(142, 59, 83, 0.3);
+    outline-offset: 1px;
+}
+
+button.activo {
+    background: var(--acento);
+    border-color: var(--acento);
+    color: #ffffff;
+}
+
+button.activo:hover {
+    background: var(--acento);
+}
+
+#btnPintar,
+#btnRutas {
+    background: var(--rosa);
+    border-color: var(--rosa);
+    color: #ffffff;
+}
+
+#btnPintar:hover,
+#btnRutas:hover {
+    background: var(--rosa-oscuro);
+    border-color: var(--rosa-oscuro);
+}
+
+#btnBorrar{
+    color: var(--error-texto);
+}
+
+#btnBorrar:hover {
+    background: var(--error-fondo);
+    border-color: var(--error-texto);
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    height: 34px;
+    padding: 0 8px;
+    font: inherit;
+    font-size: 14px;
+    color: var(--texto);
+    background: #ffffff;
+    border: 1px solid var(--linea);
+    border-radius: 8px;
+}
+
+canvas {
+    display: block;
+    background-color: #ffffff;
+    background-image:
+        linear-gradient(#efe0e3 1px, transparent 1px),
+        linear-gradient(90deg, #efe0e3 1px, transparent 1px);
+    background-size: 50px 50px;
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+}
+
+canvas[data-modo="vertice"],
+canvas[data-modo="arista"] {
+    cursor: crosshair;
+}
+
+#estado {
+    margin: 10px 0 0;
+    padding: 8px 16px;
+    font-size: 14px;
+    background: var(--estado);
+    color: var(--texto);
+    border-radius: 999px;
+}
+
+#estado.estado-ok {
+    background: var(--ok-fondo);
+    color: var(--ok-texto);
+}
+
+#estado.estado-error {
+    background: var(--error-fondo);
+    color: var(--error-texto);
+}
+
+#caComando {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    padding: 12px 14px;
+    background: var(--tarjeta);
+    border: 1px dashed var(--rosa);
+    border-radius: var(--radio);
+}
+
+#caComando p {
+    flex-basis: 100%;
+    margin: 0;
+    font-size: 14px;
+    color: var(--texto-suave);
+}
+
+#caComando button {
+    width: auto;
+}
+
+code {
+    padding: 6px 10px;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px;
+    background: #3a1a25;
+    color: #fbcfd8;
+    border-radius: 6px;
+}
+
+
+:root {
+  --fondo: #f5eced;
+  --tarjeta: #fdf8f8;
+  --borde: #e8d3d8;
+  --linea: #d9bcc4;
+  --texto: #5c2336;
+  --texto-suave: #8a5c69;
+  --acento: #8e3b53;       
+  --rosa: #b0607a;           
+  --rosa-oscuro: #9a506a;
+  --estado: #f0dde1;
+  --ok-fondo: #e3f1e6;
+  --ok-texto: #1f5a31;
+  --error-fondo: #fbe0e0;
+  --error-texto: #9b1c1c;
+  --radio: 12px;
+}
+
+#resultado {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+
+#resultado:empty {
+    display: none;
+}
+
+#resultado p {
+    margin: 4px 0;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13.5px;
+    line-height: 1.5;
+}
+
+@media (max-width: 1060px) {
+    .app {
+        grid-template-columns: 1fr;
+    }
+
+    .panel {
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-end;
+    }
+
+    .grupo {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+
+    button,
+    input[type="text"] {
+        width: auto;
+    }
+
+    select {
+        width: 90px;
+    }
+}
