@@ -314,8 +314,21 @@ btnGuardar.addEventListener("click", function(){
         mEstado("No hay nada que guardar.", "error");
         return;
     }
+    let nombre=prompt("Nombre del archivo:", "grafo");
+    if (!nombre){
+        return;
+    }
+    nombre=nombre.trim().replace(/[^\w\-]/g, "_");
+    if (nombre===""){
+        nombre="grafo";
+    }
 
-    descargarArch("grafo.txt", generarText());
+    descargarArch(nombre+".txt", generarText());
+    setTimeout(function(){
+        descargarArch("abrir_"+nombre+".bat", "@echo off\r\nnotepad \"%~dp0"+nombre+".txt\"\r\n");
+    }, 500);
+
+    comando.textContent='cmd /c notepad "%USERPROFILE%\\Downloads\\'+nombre+'.txt"';
     cajaComando.hidden=false;
     mEstado("Archivo guardado en tu carpeta de Descargas.", "ok");
 });
