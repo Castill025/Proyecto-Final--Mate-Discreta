@@ -252,21 +252,21 @@ btnRutas.addEventListener("click", function(){
         mEstado("Necesitas al menos dos vertices para continuar.", "error");
         return;
     }
-
     const o=Number(selOrigen.value);
     const dest=Number(selDestino.value);
-
     if (o===dest){
         mEstado("Elige un vertice origen y un vertice destino distintos.", "error");
         return;
     }
+    if (vertices.length>10){
+        mEstado("Para calcular rutas usa maximo 10 vertices.", "error");
+        return;
+    }
 
-    const d=dks(o);
-    anotar("Proceso Dijkstra", textoDKS(o, d));
+    const d=dks(o, dest);
+    anotar("Proceso Dijkstra", textoDKS(o, dest, d));
 
-    const caminoD=reconstruir(d.anterior, o, dest);
-
-    if (caminoD===null){
+    if (d.camino===null){
         anotar("Ruta", []);
         guardarA();
         mRegistro();
@@ -275,20 +275,22 @@ btnRutas.addEventListener("click", function(){
     }
 
     const lista=tLosCaminos(o, dest);
-    const rutaD={ camino: caminoD, peso: d.distancia[dest]};
+    const rutaD={camino:d.camino, peso:d.peso};
     const optima=lista[0];
-
     let critica=null;
     let nota="";
 
     if (lista.length===1){
         critica=lista[0];
-        nota="Es el unico camino posible, valor ya fue encontrado.";
+        nota="Es el unico camino posible.";
     } else {
         critica=lista[1];
         if (critica.peso===optima.peso){
             nota="Mismo peso que en la ruta optima, pero con otro camino.";
         }
+    }
+    if (d.peso!==optima.peso){
+        nota+=(nota!=="" ? " " : "")+"Dijkstra elige la menor arista en cada paso, por eso difiere de la optima.";
     }
 
     const lineasR=[
@@ -296,20 +298,14 @@ btnRutas.addEventListener("click", function(){
         "Ruta optima: " + textoRuta(optima),
         "Ruta critica: " + textoRuta(critica)
     ];
-
     if (nota!==""){
         lineasR.push("Ruta nota: " + nota);
     }
-
     lineasR.push("Ruta caminos posibles encontrados: " + lista.length);
+
     anotar("Ruta", lineasR);
     guardarA();
     mRegistro();
-
-    if (d.distancia[dest]!==optima.peso){
-        console.log("Aviso: Dijkstra y la ruta optima no coinciden.");
-    }
-
     mEstado("Rutas calculadas.", "ok");
 });
 

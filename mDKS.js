@@ -1,91 +1,47 @@
-function mNoVisitado(distancia, visitado){
-  let mejor=-1;
-  for (let i=0; i<distancia.length; i++){
-    if (!visitado[i] && distancia[i]!==Infinity){
-      if (mejor===-1 || distancia[i]<distancia[mejor]){
-        mejor=i;
-      }
-    }
-  }
-  return mejor;
-}
-
-function dks(origen){
+function dks(origen, destino){
   const n=vertices.length;
-  const distancia=new Array(n).fill(Infinity);
-  const anterior=new Array(n).fill(-1);
   const visitado=new Array(n).fill(false);
-  const orden=[];
+  const camino=[origen];
   const pasos=[];
+  let peso=0;
+  visitado[origen]=true;
 
-  distancia[origen] = 0;
-
-  for (let paso=0; paso<n; paso++){
-    const u=mNoVisitado(distancia, visitado);
-    if (u === -1){
-      break;
-    }
-    visitado[u] = true;
-    orden.push(u);
-
-    const cambios=[];
+  while (camino[camino.length-1]!==destino){
+    const actual=camino[camino.length-1];
+    let mejor=-1;
     for (let j=0; j<n; j++){
-      if (matriz[u][j]>0 && !visitado[j]){
-        const nueva=distancia[u]+matriz[u][j];
-        if (nueva<distancia[j]){
-          distancia[j]=nueva;
-          anterior[j]=u;
-          cambios.push(vertices[j].nom+"="+nueva);
+      if (matriz[actual][j]>0 && !visitado[j]){
+        if (mejor===-1 || matriz[actual][j]<matriz[actual][mejor]){
+          mejor=j;
         }
       }
     }
-
-    pasos.push(
-      "Proceso Dijkstra paso "+(paso+1)+": se elige "+vertices[u].nom+
-      " (distancia "+distancia[u]+")"+
-      (cambios.length>0? ", actualiza "+cambios.join(", "): ", sin cambios")
-    );
+    if (mejor===-1){
+      if (camino.length===1){
+        pasos.push("Proceso Dijkstra: "+vertices[actual].nom+" no tiene mas salidas, no hay camino");
+        return {camino:null, peso:0, pasos:pasos};
+      }
+      camino.pop();
+      const anterior=camino[camino.length-1];
+      peso-=matriz[anterior][actual];
+      pasos.push("Proceso Dijkstra: "+vertices[actual].nom+" no tiene salida, se regresa a "+vertices[anterior].nom);
+      continue;
+    }
+    visitado[mejor]=true;
+    camino.push(mejor);
+    peso+=matriz[actual][mejor];
+    pasos.push("Proceso Dijkstra: desde "+vertices[actual].nom+" se elige "+vertices[mejor].nom+" (arista menor = "+matriz[actual][mejor]+")");
   }
 
-  return {distancia: distancia, anterior: anterior, orden: orden, pasos: pasos};
+  return {camino:camino, peso:peso, pasos:pasos};
 }
 
-function textoDKS(origen, d){
-  const lineas=["Proceso Dijkstra desde "+vertices[origen].nom+":"];
-
+function textoDKS(origen, destino, d){
+  const lineas=["Proceso Dijkstra desde "+vertices[origen].nom+" hasta "+vertices[destino].nom+":"];
   for (let i=0; i<d.pasos.length; i++){
     lineas.push(d.pasos[i]);
   }
-
-  const nombres=[];
-  for (let i=0; i<d.orden.length; i++){
-    nombres.push(vertices[d.orden[i]].nom);
-  }
-  lineas.push("Proceso Dijkstra orden de visita: "+nombres.join(", "));
-
-  const distancias=[];
-  for (let i=0; i<vertices.length; i++){
-    const valor=d.distancia[i]===Infinity ? "inalcanzable" : d.distancia[i];
-    distancias.push(vertices[i].nom+"="+valor);
-  }
-  lineas.push("Proceso Dijkstra distancias: "+distancias.join(", "));
-
   return lineas;
-}
-
-function reconstruir(anterior, origen, destino){
-  const camino=[];
-  let actual=destino;
-
-  while (actual!==-1){
-    camino.unshift(actual);
-    actual=anterior[actual];
-  }
-
-  if (camino[0]!==origen){
-    return null;
-  }
-  return camino;
 }
 
 function buscar(actual, destino, visitado, camino, peso, lista){
